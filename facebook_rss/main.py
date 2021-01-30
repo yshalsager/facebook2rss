@@ -2,11 +2,11 @@ import uvicorn
 from fastapi import FastAPI
 
 from facebook_rss import browser, cookies
-from facebook_rss.routes import home
-from facebook_rss.utils.misc import unpickle
+from facebook_rss.routes import profile
+from facebook_rss.utils.pickling import unpickle
 
 api = FastAPI()
-api.include_router(home.router)
+api.include_router(profile.router)
 
 
 @api.on_event("startup")

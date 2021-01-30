@@ -3,7 +3,7 @@ from playwright.async_api import Page
 from facebook_rss import browser
 from facebook_rss.pages.common.login import BaseLoginPage
 from facebook_rss.pages.pages import pages
-from facebook_rss.utils.misc import pickle_
+from facebook_rss.utils.pickling import pickle_
 
 
 async def login_and_get_cookies(user: str, password: str, site):
