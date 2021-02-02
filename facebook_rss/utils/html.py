@@ -37,8 +37,11 @@ def clean_urls(html: str) -> str:
     urls = re.findall(
         r'(https?://(www\.)?[-\w\d@:%._+~#=]{1,256}\.[\w\d()]{1,6}\b[-\w\d()!@:%_+.~#?&/=;]*)', html)
     for url, _ in urls:
-        url_parts = urlparse(url)
-        html = html.replace(url, f"{url_parts.scheme}/{url_parts.hostname}{url_parts.path}")
+        if 'photo.php' in url or 'video_redirect' in url:
+            html = html.replace(url, get_url_without_tracking(url))
+        else:
+            url_parts = urlparse(url)
+            html = html.replace(url, f"{url_parts.scheme}/{url_parts.hostname}{url_parts.path}")
     return html
 
 
