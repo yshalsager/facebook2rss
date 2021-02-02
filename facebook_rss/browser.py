@@ -1,4 +1,5 @@
 import logging
+from functools import wraps
 from typing import Optional
 
 from playwright.async_api import async_playwright, Browser as PBrowser, Playwright, BrowserContext
@@ -40,3 +41,18 @@ class Browser:
         await self._browser_context.close()
         await self._browser.close()
         await self._playwright.stop()
+
+    @property
+    async def cookies(self):
+        return await self._browser_context.cookies()
+
+    def refresh_cookies(self, func):
+        from facebook_rss.utils.pickling import pickle_
+
+        @wraps(func)
+        async def wrapper(*args, **kwargs):
+            value = await func(*args, **kwargs)
+            pickle_(await self.cookies)
+            return value
+
+        return wrapper

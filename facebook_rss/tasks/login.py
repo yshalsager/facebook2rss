@@ -16,7 +16,7 @@ async def login_and_get_cookies(user: str, password: str, site):
         raise RuntimeError("Login failed!")
     if callable(getattr(login_page, 'skip_save', None)):
         await login_page.skip_save()
-    cookies = await browser.cookies()
+    cookies = await browser.cookies
     await page.close()
     await browser.shutdown()
     if cookies:

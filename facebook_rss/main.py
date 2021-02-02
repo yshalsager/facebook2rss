@@ -1,18 +1,18 @@
 import uvicorn
 from fastapi import FastAPI
 
-from facebook_rss import browser, cookies
-from facebook_rss.routes import profile
+from facebook_rss import browser, local_cookies
+from facebook_rss.routes.profile import profile_router
 from facebook_rss.utils.pickling import unpickle
 
 api = FastAPI()
-api.include_router(profile.router)
+api.include_router(profile_router)
 
 
 @api.on_event("startup")
 async def startup():
     await browser.start(headless=False)
-    await browser.add_cookies(unpickle(cookies))
+    await browser.add_cookies(unpickle(local_cookies))
 
 
 @api.on_event("shutdown")

@@ -145,3 +145,4 @@ dmypy.json
 
 # Script files
 *session*
+*.db
