@@ -1,6 +1,6 @@
 # Facebook to RSS API [WIP]
 
-A small API for accessing Facebook profile, pages and groups posts as RSS feeds.
+A small API for accessing Facebook profile, pages and groups posts as RSS feeds. Based on [FastAPI](https://github.com/tiangolo/fastapi) and [Playwright](https://github.com/microsoft/playwright-python).
 
 ## Disclaimer
 
@@ -30,7 +30,7 @@ pip install .
 
 ## Usage
 
-- First, login to Facebook using the following command that will save your session in order to be used later:
+- First, If you want to access profiles' feeds, login to Facebook using the following command that will save your session in order to be used later:
 
 ```bash
 python3 -m facebook_rss --login -u email -p password
@@ -39,8 +39,17 @@ python3 -m facebook_rss --login -u email -p password
 - Next, run the following command to start serving the API:
 
 ```bash
-python3 -m facebook_rss
+uvicorn facebook_rss.main:api
 ```
+
+- You can pass any [uvicorn](http://www.uvicorn.org/#command-line-options) cli options like host and port. Also you can use your own configuration dot env (copy [config_example.env](https://github.com/yshalsager/facebook2rss/blob/master/config_example.env) and change the available options) file by passing it to uvicorn using `--env-file`
+
+```bash
+uvicorn facebook_rss.main:api --reload --env-file config_example.env
+```
+
+- To get a profile posts as RSS send GET request to `/profile/[username]/`. In other words open this API route in browser.
+For example if the API is running on localhost and port 8081: `http://127.0.0.1:8081/profile/zuck`
 
 ## Features
 
