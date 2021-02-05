@@ -3,8 +3,8 @@ from typing import List
 
 from playwright.async_api import Page, ElementHandle
 
+from facebook_rss.browser.common.profile import BaseProfilePage
 from facebook_rss.models.post import Post
-from facebook_rss.pages.common.profile import BaseProfilePage
 # pylint: disable=R0801
 from facebook_rss.utils.html import strip_tags, get_url_without_tracking
 from facebook_rss.utils.misc import random_sleep
@@ -37,6 +37,7 @@ class ProfilePage(BaseProfilePage):
         return '//a[contains(@href, "/story.php?") and contains(text(), "Full Story")]'
 
     async def get_posts(self) -> List[Post]:
+        # TODO: Add limit option to limit fetched posts number
         # posts_count = 1
         posts_count: int = len(await self.page.query_selector_all(self.posts_selector))
         posts_items = []

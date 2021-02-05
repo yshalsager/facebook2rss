@@ -3,7 +3,7 @@ from typing import List
 
 from playwright.async_api import Page
 
-from facebook_rss.pages.common.base_page import BasePage
+from facebook_rss.browser.common.base_page import BasePage
 
 
 class BaseProfilePage(BasePage, ABC):

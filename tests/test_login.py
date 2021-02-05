@@ -2,8 +2,8 @@ import logging
 
 import pytest
 
-from facebook_rss.pages.common.login import BaseLoginPage
-from facebook_rss.pages.pages import pages
+from facebook_rss.browser.common.login import BaseLoginPage
+from facebook_rss.browser.pages import pages
 
 logger = logging.getLogger(__name__)
 

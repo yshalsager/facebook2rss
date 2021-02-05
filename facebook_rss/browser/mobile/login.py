@@ -1,7 +1,7 @@
 # pylint: disable=R0801
 from playwright.async_api import Page
 
-from facebook_rss.pages.common.login import BaseLoginPage
+from facebook_rss.browser.common.login import BaseLoginPage
 
 
 class LoginPage(BaseLoginPage):

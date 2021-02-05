@@ -8,4 +8,6 @@ async def random_sleep():
 
 
 def is_expired_timestamp(timestamp: datetime, expiration=30) -> bool:
+    if isinstance(expiration, str):
+        expiration = int(expiration)
     return bool(datetime.utcnow() > timestamp + timedelta(minutes=expiration))

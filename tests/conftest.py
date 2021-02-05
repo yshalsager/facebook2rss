@@ -4,7 +4,7 @@ import logging
 import pytest
 from playwright.async_api import Page
 
-from facebook_rss import browser
+from facebook_rss.browser.browser import Browser
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +20,7 @@ def event_loop():
 @pytest.fixture(scope='session', autouse=True)
 @pytest.mark.asyncio
 async def page():
+    browser = Browser()
     await browser.start()
     page: Page = await browser.new_page()
     logger.info("New page created")

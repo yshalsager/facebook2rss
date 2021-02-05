@@ -12,13 +12,11 @@ parser = argparse.ArgumentParser(prog='python3 -m facebook_rss')
 parser.add_argument("--login", help="Login to facebook", action="store_true")
 parser.add_argument("-u", "--email", help="Email address", type=str)
 parser.add_argument("-p", "--password", help="Facebook password", type=str)
-parser.add_argument("-s", "--site", help="Facebook site to use", type=str, choices=['main', 'mobile', 'mbasic'])
 parser.add_argument("-d", "--development", help="Run in development mode", action="store_true")
 
 args = parser.parse_args()
 
 if __name__ == '__main__':
-    site = "mbasic" if not args.site else args.site
     if args.login:
         if not args.email:
             print("You must provide an email address!")
@@ -26,7 +24,7 @@ if __name__ == '__main__':
         if not args.password:
             print("You must provide a password!")
             exit_(1)
-        asyncio.run(login_and_get_cookies(args.email, args.password, site=site))
+        asyncio.run(login_and_get_cookies(args.email, args.password))
     else:
         if not local_cookies.exists():
             print("Either you have not logged in yet or the provided cookies file doesn't exists!")
