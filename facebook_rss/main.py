@@ -1,10 +1,19 @@
 import uvicorn
 from fastapi import FastAPI
 
+from facebook_rss import local_cookies
+from facebook_rss.config import get_settings
 from facebook_rss.routes.profile import profile_router
 
 api = FastAPI()
 api.include_router(profile_router)
+
+
+@api.on_event("startup")
+async def startup_event():
+    settings = get_settings()
+    if not local_cookies:
+        settings.USE_ACCOUNT = False
 
 
 async def run_api(development_mode=False):

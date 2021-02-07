@@ -3,7 +3,6 @@ import argparse
 import asyncio
 from sys import exit as exit_
 
-from facebook_rss import local_cookies
 from facebook_rss.main import run_api
 from facebook_rss.tasks.login import login_and_get_cookies
 
@@ -26,7 +25,4 @@ if __name__ == '__main__':
             exit_(1)
         asyncio.run(login_and_get_cookies(args.email, args.password))
     else:
-        if not local_cookies.exists():
-            print("Either you have not logged in yet or the provided cookies file doesn't exists!")
-            exit_(1)
         asyncio.run(run_api(development_mode=args.development))
