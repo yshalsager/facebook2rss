@@ -9,6 +9,6 @@ api.include_router(profile_router)
 
 async def run_api(development_mode=False):
     if development_mode:
-        uvicorn.run("facebook_rss.main:api", host="127.0.0.1", port=8081, reload=True)
+        uvicorn.run("facebook_rss.main:api", host="127.0.0.1", port=8081, reload=True, reload_dirs=['facebook_rss/'])
     else:
         uvicorn.run("facebook_rss.main:api", host="127.0.0.1", port=8081)
