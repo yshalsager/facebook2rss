@@ -23,7 +23,7 @@ async def get_profile(profile: str, commons: CommonQueryParams = Depends(),
                       settings: Settings = Depends(get_settings)):
     page: Page = await browser.new_page()
     profile_page = await ProfilePage.create(page, profile)
-    posts: List[Post] = await profile_page.get_posts(full=commons.full, limit=commons.limit)
+    posts: List[Post] = await profile_page.get_posts(full=commons.full, limit=commons.limit, as_text=commons.as_text)
     rss_generator = RSSGenerator(posts, profile)
     rss_feed = rss_generator.generate_feed()
     await page.close()

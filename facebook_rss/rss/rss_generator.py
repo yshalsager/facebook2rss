@@ -26,5 +26,5 @@ class RSSGenerator:
             entry = self.feed.add_entry()
             entry.title(post.title)
             entry.link(href=post.url, rel='alternate')
-            entry.description(escape(clean_urls(post.html)))
+            entry.description(escape(clean_urls(post.content)))
         return self.feed.rss_str().decode('utf-8')
