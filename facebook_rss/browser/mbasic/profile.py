@@ -36,12 +36,15 @@ class ProfilePage(BaseProfilePage):
         # return '//article[contains(@data-ft,"top_level_post_id")]//p'
         return '//a[contains(@href, "/story.php?") and contains(text(), "Full Story")]'
 
-    async def get_posts(self) -> List[Post]:
-        # TODO: Add limit option to limit fetched posts number
-        # posts_count = 1
-        posts_count: int = len(await self.page.query_selector_all(self.posts_selector))
+    async def get_posts(self, full: int = 0, limit: int = 0) -> List[Post]:
+        if not full:
+            posts_count = 1
+        else:
+            posts_count: int = len(await self.page.query_selector_all(self.posts_selector))
         posts_items = []
         for item in range(0, posts_count):
+            if limit and item > limit:
+                continue
             full_text = ""
             posts: List[ElementHandle] = await self.page.query_selector_all(self.posts_selector)
             post = posts[item]

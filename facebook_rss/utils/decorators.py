@@ -10,7 +10,8 @@ def cached(func):
     @wraps(func)
     async def wrapper(*args, **kwargs):
         feed = get_feed(kwargs['db'], kwargs['profile'])
-        if feed and not is_expired_timestamp(feed.timestamp, expiration=kwargs['settings'].EXPIRATION_TIME):
+        if not kwargs['commons'].no_cache and feed and not is_expired_timestamp(
+                feed.timestamp, expiration=kwargs['settings'].EXPIRATION_TIME):
             return Response(content=feed.rss, media_type="application/xml")
         value = await func(*args, **kwargs)
         update_feed(
