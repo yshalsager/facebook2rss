@@ -1,3 +1,4 @@
+from pathlib import Path
 from pickle import load, dump, HIGHEST_PROTOCOL
 
 from facebook_rss import config_path, cookies_file_name
@@ -8,6 +9,7 @@ def pickle_(cookies: list):
         dump(cookies, cookies_file, protocol=HIGHEST_PROTOCOL)
 
 
-def unpickle(file) -> list:
-    with open(file, 'rb') as cookies_file:
-        return load(cookies_file)
+def unpickle(file: Path) -> list:
+    if file and file.exists():
+        with open(file, 'rb') as cookies_file:
+            return load(cookies_file)

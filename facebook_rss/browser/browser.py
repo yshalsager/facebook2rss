@@ -41,7 +41,8 @@ class Browser:
         return await self._browser_context.new_page()
 
     async def add_cookies(self, cookies):
-        await self._browser_context.add_cookies(cookies)
+        if cookies:
+            await self._browser_context.add_cookies(cookies)
 
     async def shutdown(self):
         logger.info("Performing manual closing")
