@@ -27,6 +27,8 @@ class BaseFBPage(BasePage, ABC):
         self._video_selector = None
         self._url = ""
         self._is_group = False
+        self._not_available_selector = "//span[contains(text(), 'cannot be displayed right now') or" \
+                                       " contains(text(), 'was not found')]"
 
     @property
     def url(self):
@@ -36,6 +38,10 @@ class BaseFBPage(BasePage, ABC):
     @abstractmethod
     def posts_selector(self):
         raise NotImplementedError
+
+    @property
+    async def is_not_available(self):
+        return bool(await self.page.query_selector(self._not_available_selector))
 
     async def get_posts(self, full: int = 0, limit: int = 0, as_text: int = 0, include_comments: int = 0) -> List[Post]:
         start = 1 if self._is_group else 0

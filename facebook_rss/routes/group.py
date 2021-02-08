@@ -8,7 +8,7 @@ from facebook_rss.browser.pages import pages
 from facebook_rss.config import Settings, get_settings
 from facebook_rss.db.session import get_db
 from facebook_rss.models.post import Post
-from facebook_rss.routes import CommonQueryParams, unauthorized
+from facebook_rss.routes import CommonQueryParams, unauthorized, unavailable
 from facebook_rss.rss.rss_generator import RSSGenerator
 from facebook_rss.utils.decorators import cached
 
@@ -26,6 +26,9 @@ async def get_group(fb_page: str, commons: CommonQueryParams = Depends(),
     if not settings.USE_ACCOUNT and is_private:
         await page.close()
         raise unauthorized
+    if await group_page.is_not_available:
+        await page.close()
+        raise unavailable
     posts: List[Post] = await group_page.get_posts(
         full=commons.full, limit=commons.limit, as_text=commons.as_text, include_comments=commons.comments)
     rss_feed = RSSGenerator(posts, fb_page).generate_feed()

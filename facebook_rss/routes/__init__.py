@@ -13,3 +13,7 @@ class CommonQueryParams:
 unauthorized = HTTPException(
     status_code=403,
     detail="You cannot access Facebook profiles without enabling USE_ACCOUNT option and logged in.")
+
+unavailable = HTTPException(
+    status_code=404,
+    detail="You cannot access this Facebook url currently. You may checkout what's wrong with it manually")
