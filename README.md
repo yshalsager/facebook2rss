@@ -48,8 +48,8 @@ uvicorn facebook_rss.main:api
 uvicorn facebook_rss.main:api --reload --env-file config_example.env
 ```
 
-- To get a profile posts as RSS send GET request to `/profile/[username]/`. In other words open this API route in browser.
-For example if the API is running on localhost and port 8081: `http://127.0.0.1:8081/profile/zuck`
+- Checkout avaiable API routes in auto-generated API documentation thanks to FastAPI.
+For example if the API is running on localhost and port 8081: `http://127.0.0.1:8081/docs`
 
 ## Features
 
