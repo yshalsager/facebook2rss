@@ -1,22 +1,24 @@
 from functools import wraps
 
-from fastapi import Response, HTTPException
+from fastapi import Response
 
 from facebook_rss.db.curd import get_feed, update_feed, add_feed
+from facebook_rss.routes import unauthorized
 from facebook_rss.utils.misc import is_expired_timestamp
 
 
 def cached(func):
     @wraps(func)
     async def wrapper(*args, **kwargs):
-        feed = get_feed(kwargs['db'], kwargs['profile'])
-        if not kwargs['commons'].no_cache and feed and not is_expired_timestamp(
-                feed.timestamp, expiration=kwargs['settings'].EXPIRATION_TIME):
-            return Response(content=feed.rss, media_type="application/xml")
+        feed = get_feed(kwargs['db'], kwargs['fb_page'])
+        if kwargs.get('commons'):
+            if not kwargs['commons'].no_cache and feed and not is_expired_timestamp(
+                    feed.timestamp, expiration=kwargs['settings'].EXPIRATION_TIME):
+                return Response(content=feed.rss, media_type="application/xml")
         value = await func(*args, **kwargs)
         update_feed(
-            kwargs['db'], kwargs['profile'], value.body.decode()
-        ) if feed else add_feed(kwargs['db'], kwargs['profile'], value.body.decode())
+            kwargs['db'], kwargs['fb_page'], value.body.decode()
+        ) if feed else add_feed(kwargs['db'], kwargs['fb_page'], value.body.decode())
         return value
 
     return wrapper
@@ -26,9 +28,7 @@ def requires_login(func):
     @wraps(func)
     async def wrapper(*args, **kwargs):
         if not kwargs['settings'].USE_ACCOUNT:
-            raise HTTPException(
-                status_code=403,
-                detail="You cannot access Facebook profiles without enabling USE_ACCOUNT option and logged in.")
+            raise unauthorized
         value = await func(*args, **kwargs)
         return value
 

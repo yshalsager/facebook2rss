@@ -12,6 +12,7 @@ uvicorn = { extras = ["standard"], version = "^0.13.3" }
 feedgen = "^0.9.0"
 SQLAlchemy = "^1.3.23"
 python-dotenv = "^0.15.0"
+dateparser = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -63,5 +63,7 @@ async def get_browser() -> Browser:
     try:
         yield browser
     finally:
-        pickle_(await browser.cookies)
+        cookies = await browser.cookies
+        if len(cookies) > 2:
+            pickle_(cookies)
         await browser.shutdown()

@@ -1,22 +1,34 @@
+from abc import ABC, abstractmethod
 from html import escape
 from typing import List
 
 from feedgen.feed import FeedGenerator
 
+from facebook_rss.models.notification import Notification
 from facebook_rss.models.post import Post
 from facebook_rss.utils.html import clean_urls
 
 
-class RSSGenerator:
+class BaseRSSGenerator(ABC):
     feed: FeedGenerator
+
+    def __init__(self):
+        self.feed = FeedGenerator()
+
+    @abstractmethod
+    def generate_feed(self) -> str:
+        raise NotImplementedError
+
+
+class RSSGenerator(BaseRSSGenerator):
     posts: List[Post]
 
     def __init__(self, posts, fb):
+        super().__init__()
         self.fb = fb
         self.posts = posts
-        self.feed = FeedGenerator()
 
-    def generate_feed(self):
+    def generate_feed(self) -> str:
         name = self.posts[0].author
         self.feed.title(name)
         self.feed.link(href=f"https://www.facebook.com/{self.fb}/posts?_fb_noscript=1", rel="alternate")
@@ -27,4 +39,26 @@ class RSSGenerator:
             entry.title(post.title)
             entry.link(href=post.url, rel='alternate')
             entry.description(escape(clean_urls(post.content)))
+        return self.feed.rss_str().decode('utf-8')
+
+
+class NotificationRSSGenerator(BaseRSSGenerator):
+    notifications: List[Notification]
+
+    def __init__(self, notifications):
+        super().__init__()
+        self.notifications = notifications
+
+    def generate_feed(self) -> str:
+        name = "Notifications"
+        self.feed.title(name)
+        self.feed.link(href="https://mbasic.facebook.com/notifications.php", rel="alternate")
+        self.feed.description(name)
+        self.feed.logo(self.notifications[0].logo)
+        for notification in self.notifications:
+            entry = self.feed.add_entry()
+            entry.title(notification.title)
+            entry.link(href=notification.url, rel='alternate')
+            entry.description(notification.content)
+            entry.pubDate(notification.date)
         return self.feed.rss_str().decode('utf-8')
