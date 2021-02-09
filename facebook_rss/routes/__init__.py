@@ -12,7 +12,8 @@ async def common_parameters(
         limit=Query(0, description="Maximum number of posts to fetch."),
         as_text=Query(0, description="Get post content as text instead of HTML."),
         comments=Query(0, description="Include post comments in the feed.")):
-    return {"full": full, "no_cache": no_cache, "limit": limit, "as_text": as_text, "comments": comments}
+    return {"full": int(full), "no_cache": int(no_cache), "limit": int(limit),
+            "as_text": int(as_text), "comments": int(comments)}
 
 
 unauthorized = HTTPException(
