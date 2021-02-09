@@ -146,4 +146,4 @@ dmypy.json
 # Script files
 *session*
 *.db
-config.env
+*.env
