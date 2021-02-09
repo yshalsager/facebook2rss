@@ -63,6 +63,9 @@ class BaseFBPage(BasePage, ABC):
                 post_url = post_url.replace("m.facebook", "mbasic.facebook")
             await self.open(post_url)
             post = await self.page.query_selector(self._post_selector)
+            date = await post.query_selector(self._publish_date_selector)
+            if date:
+                date = await date.text_content()
             profile_name = await post.query_selector(self._author_selector)
             if profile_name:
                 profile_name = await profile_name.text_content()
@@ -74,7 +77,6 @@ class BaseFBPage(BasePage, ABC):
                 text = await text_obj.text_content()
                 title = f"{text[:30]}..."
             else:
-                date = await post.query_selector(self._publish_date_selector)
                 if date:
                     full_text += f"{await date.text_content()}\n"
                 text_chunks = await post.query_selector_all(self._post_text_selector)
@@ -123,7 +125,8 @@ class BaseFBPage(BasePage, ABC):
                 Post(url=get_url_without_tracking(await self.get_actual_url()),
                      title=title,
                      content=full_text if as_text else post_html,
-                     author=profile_name)
+                     author=profile_name,
+                     date=date)
             )
             await self.back()
         return posts_items
