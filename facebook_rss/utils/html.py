@@ -2,30 +2,24 @@ import re
 from urllib.parse import urlparse
 
 
-def strip_tags(string: str, allowed_tags: str = '<a><img><i><u><br><p>'):
+def strip_tags(string, allowed_tags='a,img,i,u,br,p,strong'):
     """
-    Remove xml style tags from an input string.
-    Original source is https://www.calebthorne.com/blog/python/2012/06/08/python-strip-tags
+    Remove html tags from an input string.
+    based on https://www.calebthorne.com/blog/python/2012/06/08/python-strip-tags
     :param string The input string.
-    :param allowed_tags A string to specify tags which should not be removed.
+    :param allowed_tags A string to specify tags which should not be removed, separated by commas.
     """
     if allowed_tags != '':
         # Get a list of all allowed tag names.
-        allowed_tags_list = re.sub(r'[\\/<> ]+', '', allowed_tags).split(',')
-        allowed_pattern = ''
-        for s in allowed_tags_list:
-            if s == '':
-                continue;
-            # Add all possible patterns for this tag to the regex.
-            if allowed_pattern != '':
-                allowed_pattern += '|'
-            allowed_pattern += '<' + s + ' [^><]*>$|<' + s + '>|'
-        # Get all tags included in the string.
-        all_tags = re.findall(r'<]+>', string, re.I)
+        allowed_tags = allowed_tags.split(',')
+        allowed_tags_pattern = ['</?' + allowed_tag + '[^>]*>' for allowed_tag in allowed_tags]
+        all_tags = re.findall(r'<[^>]+>', string, re.I)
+        not_allowed_tags = []
         for tag in all_tags:
-            # If not allowed, replace it.
-            if not re.match(allowed_pattern, tag, re.I):
-                string = string.replace(tag, '')
+            if not [True for pattern in allowed_tags_pattern if re.match(pattern, tag)]:
+                not_allowed_tags.append(tag)
+        for not_allowed_tag in not_allowed_tags:
+            string = re.sub(re.escape(not_allowed_tag), '', string)
     else:
         # If no allowed tags, remove all.
         string = re.sub(r'<[^>]*?>', '', string)
