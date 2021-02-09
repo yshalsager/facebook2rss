@@ -30,6 +30,12 @@ poetry install
 pip install .
 ```
 
+Finally install Playwright required files
+
+```bash
+playwright install
+```
+
 ## Usage
 
 - First, If you want to access profiles and private groups feeds, login to Facebook using the following command that
