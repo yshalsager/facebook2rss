@@ -24,6 +24,6 @@ async def startup_event():
 
 async def run_api(development_mode=False):
     if development_mode:
-        uvicorn.run("facebook_rss.main:api", host="127.0.0.1", port=8081, reload=True, reload_dirs=['facebook_rss/'])
+        uvicorn.run("facebook_rss.main:api", host="127.0.0.1", port=8080, reload=True, reload_dirs=['facebook_rss/'])
     else:
-        uvicorn.run("facebook_rss.main:api", host="127.0.0.1", port=8081)
+        uvicorn.run("facebook_rss.main:api", host="127.0.0.1", port=8080)

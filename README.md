@@ -45,11 +45,11 @@ uvicorn facebook_rss.main:api
 - You can pass any [uvicorn](http://www.uvicorn.org/#command-line-options) cli options like host and port. Also you can use your own configuration dot env (copy [config_example.env](https://github.com/yshalsager/facebook2rss/blob/master/config_example.env) and change the available options) file by passing it to uvicorn using `--env-file`
 
 ```bash
-uvicorn facebook_rss.main:api --reload --env-file config_example.env
+uvicorn facebook_rss.main:api --env-file config_example.env
 ```
 
-- Checkout avaiable API routes in auto-generated API documentation thanks to FastAPI.
-For example if the API is running on localhost and port 8081: `http://127.0.0.1:8081/docs`
+- Checkout the available API routes in auto-generated API documentation thanks to FastAPI.
+For example if the API is running on localhost and port 8080: `http://127.0.0.1:8080/docs`
 
 ## Features
 
