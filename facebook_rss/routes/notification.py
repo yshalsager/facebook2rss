@@ -14,11 +14,14 @@ from facebook_rss.utils.decorators import cached, requires_login
 notifications_router = r = APIRouter()
 
 
-@r.get("/notifications/")
+@r.get("/notifications/", tags=["notifications"])
 @requires_login
 @cached
 async def get_notifications(fb_page: str = "notifications", browser=Depends(get_browser), db=Depends(get_db),
                             settings: Settings = Depends(get_settings)):
+    """
+    Get feeds of your account notifications.
+    """
     page: Page = await browser.new_page()
     notifications_page = await pages[settings.SITE]["notification"].create(page)
     notifications: List[Notification] = await notifications_page.get_notifications()
