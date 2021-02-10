@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  facebook2rss:
+    build:
+      context: https://github.com/yshalsager/facebook2rss.git#docker
+      dockerfile: Dockerfile
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    restart: on-failure
