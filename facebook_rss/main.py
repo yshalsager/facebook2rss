@@ -29,7 +29,7 @@ tags_metadata = [
 api = FastAPI(
     title="Facebook to RSS",
     description="A simple API to bring back RSS feed of Facebook",
-    version="0.3.0",
+    version="0.4.0",
     openapi_tags=tags_metadata,
     default_response_class=XMLResponse
 )
