@@ -30,10 +30,10 @@ poetry install
 pip install .
 ```
 
-Finally install Playwright required files
+Finally, install Playwright required files
 
 ```bash
-playwright install
+playwright install chromium
 ```
 
 ## Usage
