@@ -10,12 +10,13 @@ from facebook_rss.db.session import get_db
 from facebook_rss.models.post import Post
 from facebook_rss.routes import unavailable, common_parameters
 from facebook_rss.rss.rss_generator import RSSGenerator
-from facebook_rss.utils.decorators import cached
+from facebook_rss.utils.decorators import cached, requires_auth
 
 page_router = r = APIRouter()
 
 
 @r.get("/page/{fb_page}", tags=["pages"])
+@requires_auth
 @cached
 async def get_page(fb_page: str, commons: dict = Depends(common_parameters),
                    browser=Depends(get_browser), db=Depends(get_db),

@@ -8,16 +8,19 @@ from facebook_rss.browser.pages import pages
 from facebook_rss.config import Settings, get_settings
 from facebook_rss.db.session import get_db
 from facebook_rss.models.notification import Notification
+from facebook_rss.routes import minimal_parameters
 from facebook_rss.rss.rss_generator import NotificationRSSGenerator
-from facebook_rss.utils.decorators import cached, requires_login
+from facebook_rss.utils.decorators import cached, requires_login, requires_auth
 
 notifications_router = r = APIRouter()
 
 
 @r.get("/notifications/", tags=["notifications"])
+@requires_auth
 @requires_login
 @cached
-async def get_notifications(fb_page: str = "notifications", browser=Depends(get_browser), db=Depends(get_db),
+async def get_notifications(fb_page: str = "notifications", browser=Depends(get_browser),
+                            commons: dict = Depends(minimal_parameters), db=Depends(get_db),
                             settings: Settings = Depends(get_settings)):
     """
     Get feeds of your account notifications.

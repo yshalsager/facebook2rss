@@ -83,6 +83,7 @@ uvicorn facebook_rss.main:api --env-file config_example.env
 - RSS feeds are cached by default (for 30 minutes) to not abuse Facebook and trigger any anti-automation mechanisms.
   This can be configured as you want and also can be ignored by using `no_cache=1` parameter with any of the API routes.
 - Supports using HTTP or SOCKS5 proxies.
+- Secure access to the API using your own `api_key` that can be configured via env file. (Disabled by default)
 
 ## Limitations
 

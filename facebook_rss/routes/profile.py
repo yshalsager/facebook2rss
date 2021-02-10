@@ -10,12 +10,13 @@ from facebook_rss.db.session import get_db
 from facebook_rss.models.post import Post
 from facebook_rss.routes import unavailable, common_parameters
 from facebook_rss.rss.rss_generator import RSSGenerator
-from facebook_rss.utils.decorators import cached, requires_login
+from facebook_rss.utils.decorators import cached, requires_login, requires_auth
 
 profile_router = r = APIRouter()
 
 
 @r.get("/profile/{fb_page}", tags=["profiles"])
+@requires_auth
 @requires_login
 @cached
 async def get_profile(fb_page: str, commons: dict = Depends(common_parameters),
