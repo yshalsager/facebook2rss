@@ -1,0 +1,33 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  standard:
+    format: "%(asctime)s [%(levelname)s] %(name)s [%(module)s.%(funcName)s:%(lineno)d]: %(message)s"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: standard
+    level: INFO
+    stream: ext://sys.stdout
+
+  file:
+    class: logging.handlers.TimedRotatingFileHandler
+    formatter: standard
+    filename: app_log.log
+    level: INFO
+    when: d
+    interval: 1
+    backupCount: 3
+
+
+loggers:
+  uvicorn:
+    error:
+      propagate: true
+
+root:
+  level: INFO
+  handlers: [ console, file ]
+  propagate: no

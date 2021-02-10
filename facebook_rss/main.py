@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+from fastapi.logger import logger
 
 from facebook_rss import local_cookies
 from facebook_rss.config import get_settings
@@ -40,13 +41,17 @@ api.include_router(notifications_router)
 
 @api.on_event("startup")
 async def startup_event():
+    logger.info("Starting...")
     settings = get_settings()
     if not local_cookies:
+        logger.info("Login cookies file was not found, setting working mode to no account!")
         settings.USE_ACCOUNT = False
+    logger.info("Login cookies file was found, setting working mode to use account!")
 
 
 async def run_api(development_mode=False):
     if development_mode:
+        logger.info("Running in development mode!")
         uvicorn.run("facebook_rss.main:api", host="127.0.0.1", port=8080, reload=True, reload_dirs=['facebook_rss/'])
     else:
         uvicorn.run("facebook_rss.main:api", host="127.0.0.1", port=8080)

@@ -1,3 +1,4 @@
+import logging
 from functools import wraps
 
 from fastapi import Response
@@ -8,17 +9,22 @@ from facebook_rss.utils.misc import is_expired_timestamp
 
 
 def cached(func):
+    logger = logging.getLogger('cache')
+
     @wraps(func)
     async def wrapper(*args, **kwargs):
         feed = get_feed(kwargs['db'], kwargs['fb_page'])
         if kwargs.get('commons'):
             if not kwargs['commons'].get('no_cache') and feed and not is_expired_timestamp(
                     feed.timestamp, expiration=kwargs['settings'].EXPIRATION_TIME):
+                logger.info("Valid cached feed found for %s.", kwargs['fb_page'])
                 return Response(content=feed.rss, media_type="application/xml")
+        logger.info("No valid cached feed found for %s, getting a new feed...", kwargs['fb_page'])
         value = await func(*args, **kwargs)
         update_feed(
             kwargs['db'], kwargs['fb_page'], value.body.decode()
         ) if feed else add_feed(kwargs['db'], kwargs['fb_page'], value.body.decode())
+        logger.info("Feeds cache has been updated.")
         return value
 
     return wrapper

@@ -1,12 +1,10 @@
 from functools import lru_cache
-from pathlib import Path
 
 from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
     APP_NAME: str = "Facebook to RSS API"
-    LOG_DIR: str = f"{str(Path(__file__).absolute().parent)}/logs/"
     # Playwright Browser Connection
     PROXY_SERVER: str = ""  # Supports http and socks proxies.
     PROXY_USERNAME: str = ""
