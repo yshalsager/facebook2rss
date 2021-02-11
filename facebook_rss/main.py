@@ -41,12 +41,13 @@ api.include_router(notifications_router)
 
 @api.on_event("startup")
 async def startup_event():
-    logger.info("Starting...")
+    logger.info("Performing startup tasks...")
     settings = get_settings()
     if not local_cookies:
         logger.info("Login cookies file was not found, setting working mode to no account!")
         settings.USE_ACCOUNT = False
-    logger.info("Login cookies file was found, setting working mode to use account!")
+    else:
+        logger.info("Login cookies file was found, setting working mode to use account!")
 
 
 async def run_api(development_mode=False):
