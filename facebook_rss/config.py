@@ -5,7 +5,7 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     APP_NAME: str = "Facebook to RSS API"
-    USE_KEY: bool = True  # Use secret key for API requests. Enable this if you want and edit API_KEY below.
+    USE_KEY: bool = False  # Use secret key for API requests. Enable this if you want and edit API_KEY below.
     API_KEY: str = "abcdefghijklmnopqrstuvwxyz0123456789"
     # Playwright Browser Connection
     PROXY_SERVER: str = ""  # Supports http and socks proxies.
