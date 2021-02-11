@@ -11,6 +11,7 @@ class ProfilePage(BaseFBPage):
         super().__init__(page)
         self._url = f"https://mbasic.facebook.com/{profile}?v=timeline"
         self._post_selector = "//div[contains(@data-ft,'top_level_post_id')]"
+        self._post_content_selector = "//div[contains(@data-ft, '{')]"
         self._author_selector = "//strong/a[last()]"
         self._publish_date_selector = "abbr"
         self._post_text_selector = "//p"

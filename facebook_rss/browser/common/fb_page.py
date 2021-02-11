@@ -7,7 +7,7 @@ from playwright.async_api import Page, ElementHandle
 from facebook_rss.browser.common.base_page import BasePage
 from facebook_rss.models.post import Post
 # pylint: disable=R0801
-from facebook_rss.utils.html import strip_tags, get_url_without_tracking
+from facebook_rss.utils.html import strip_tags, clean_urls
 from facebook_rss.utils.misc import random_sleep
 
 
@@ -22,6 +22,7 @@ class BaseFBPage(BasePage, ABC):
         self._comments_selector = '//div[contains(@id, "actions")]/following-sibling::div/div/div'
         self._image_selector = None
         self._post_selector = None
+        self._post_content_selector = None
         self._post_text_selector = None
         self._publish_date_selector = None
         self._video_selector = None
@@ -71,14 +72,15 @@ class BaseFBPage(BasePage, ABC):
                 profile_name = await profile_name.text_content()
                 full_text = f"{profile_name} posted:\n"
             if not as_text:
-                post_html = strip_tags(await post.inner_html())
+                post_html = strip_tags(
+                    await self.page.inner_html(f"{self._post_selector}{self._post_content_selector}"))
                 post_html = re.sub(r'href=\"/', 'href=\"https://facebook.com/', post_html, re.M)
                 text_obj = await post.query_selector(self._post_text_selector)
                 text = await text_obj.text_content()
                 title = f"{text[:30]}..."
             else:
                 if date:
-                    full_text += f"{await date.text_content()}\n"
+                    full_text += date
                 text_chunks = await post.query_selector_all(self._post_text_selector)
                 text = [await i.text_content() for i in text_chunks]
                 text = '\n'.join(text) + '\n'
@@ -122,9 +124,9 @@ class BaseFBPage(BasePage, ABC):
             if full:
                 await random_sleep()
             posts_items.append(
-                Post(url=get_url_without_tracking(await self.get_actual_url()),
+                Post(url=clean_urls(await self.get_actual_url()),
                      title=title,
-                     content=full_text if as_text else post_html,
+                     content=full_text if as_text else clean_urls(post_html),
                      author=profile_name,
                      date=date)
             )
