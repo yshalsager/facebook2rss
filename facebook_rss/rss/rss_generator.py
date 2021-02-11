@@ -7,7 +7,6 @@ from tzlocal import get_localzone
 
 from facebook_rss.models.notification import Notification
 from facebook_rss.models.post import Post
-from facebook_rss.utils.html import clean_urls
 
 
 class BaseRSSGenerator(ABC):
@@ -43,7 +42,8 @@ class RSSGenerator(BaseRSSGenerator):
             entry = self.feed.add_entry()
             entry.title(post.title)
             entry.link(href=post.url, rel='alternate')
-            entry.description(clean_urls(post.content))
+            entry.guid(guid=post.url, permalink=True)
+            entry.description(post.content)
             if post.date:
                 entry.pubDate(post.date)
         return self.feed.rss_str().decode('utf-8')
