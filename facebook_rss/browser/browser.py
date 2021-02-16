@@ -12,7 +12,7 @@ logger = logging.getLogger('browser')
 
 class Browser:
 
-    def __init__(self, settings):
+    def __init__(self, settings=None):
         self._playwright: Optional[Playwright] = None
         self._browser: Optional[PBrowser] = None
         self._browser_context: Optional[BrowserContext] = None
@@ -22,7 +22,7 @@ class Browser:
         if not self._playwright:
             self._playwright = await async_playwright().start()
         if not self._browser:
-            if self._settings.PROXY_SERVER and self._settings.PROXY_USERNAME and self._settings.PROXY_PASSWORD:
+            if self._settings and self._settings.PROXY_SERVER and self._settings.PROXY_USERNAME and self._settings.PROXY_PASSWORD:
                 self._browser = await self._playwright.chromium.launch(
                     proxy={"server": self._settings.PROXY_SERVER, "username": self._settings.PROXY_USERNAME,
                            "password": self._settings.PROXY_PASSWORD}, **kwargs)

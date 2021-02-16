@@ -15,8 +15,8 @@ class BasePage(ABC):
         raise NotImplementedError
 
     @property
-    @abstractmethod
-    def url(self): return self._url
+    def url(self):
+        return self._url
 
     @url.setter
     def url(self, value):

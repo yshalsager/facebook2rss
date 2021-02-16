@@ -147,3 +147,4 @@ dmypy.json
 *session*
 *.db
 *.env
+*.log.*

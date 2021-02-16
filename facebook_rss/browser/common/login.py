@@ -9,11 +9,8 @@ class BaseLoginPage(BasePage, ABC):
 
     def __init__(self, page: Page):
         self._url = ""
+        self._checkout_url = "facebook.com/checkpoint/"
         super().__init__(page)
-
-    @property
-    def url(self):
-        return self._url
 
     @property
     @abstractmethod
@@ -36,3 +33,7 @@ class BaseLoginPage(BasePage, ABC):
         async with self.page.expect_navigation():
             await self.page.click(self.login_btn)
         return True
+
+    @property
+    async def requires_2fa(self) -> bool:
+        return bool(self._checkout_url in self.get_actual_url())

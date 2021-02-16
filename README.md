@@ -87,7 +87,7 @@ uvicorn facebook_rss.main:api --env-file config_example.env
 
 ## Limitations
 
-- Two-factor authentication is not supported
+- Apparently Facebook restricts access to public profiles on mbasic website after several visits.
 
 ## Current status
 

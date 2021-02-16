@@ -32,10 +32,6 @@ class BaseFBPage(BasePage, ABC):
                                        " contains(text(), 'was not found')]"
 
     @property
-    def url(self):
-        return self._url
-
-    @property
     @abstractmethod
     def posts_selector(self):
         raise NotImplementedError
