@@ -1,7 +1,6 @@
 """entry point"""
 import argparse
 import asyncio
-from sys import exit as exit_
 
 from facebook_rss.main import run_api
 from facebook_rss.tasks.login import login_and_get_cookies
@@ -18,11 +17,9 @@ args = parser.parse_args()
 if __name__ == '__main__':
     if args.login:
         if not args.email:
-            print("You must provide an email address!")
-            exit_(1)
+            email = input("Enter your email address: ")
         if not args.password:
-            print("You must provide a password!")
-            exit_(1)
+            password = input("Enter your password: ")
         asyncio.run(login_and_get_cookies(args.email, args.password))
     else:
         asyncio.run(run_api(development_mode=args.development))
