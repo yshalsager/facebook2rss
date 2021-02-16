@@ -29,6 +29,7 @@ class RSSGenerator(BaseRSSGenerator):
         self.posts = posts
 
     def generate_feed(self) -> str:
+        self.feed.generator(generator="Facebook to RSS", uri="https://github.com/yshalsager/facebook2rss/")
         name = self.posts[0].author
         self.feed.title(name)
         self.feed.link(href=f"https://www.facebook.com/{self.fb}/posts?_fb_noscript=1", rel="alternate")
