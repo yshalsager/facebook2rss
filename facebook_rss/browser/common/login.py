@@ -36,4 +36,4 @@ class BaseLoginPage(BasePage, ABC):
 
     @property
     async def requires_2fa(self) -> bool:
-        return bool(self._checkout_url in self.get_actual_url())
+        return bool(self._checkout_url in await self.get_actual_url())
