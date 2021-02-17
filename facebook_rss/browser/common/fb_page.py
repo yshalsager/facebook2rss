@@ -68,8 +68,10 @@ class BaseFBPage(BasePage, ABC):
                 profile_name = await profile_name.text_content()
                 full_text = f"{profile_name} posted:\n"
             if not as_text:
-                post_html = strip_tags(
-                    await self.page.inner_html(f"{self._post_selector}{self._post_content_selector}"))
+                post_html = ""
+                html_parts = await self.page.query_selector_all(f"{self._post_selector}{self._post_content_selector}")
+                for part in html_parts:
+                    post_html += strip_tags(await part.inner_html())
                 post_html = re.sub(r'href=\"/', 'href=\"https://facebook.com/', post_html, re.M)
                 text_obj = await post.query_selector(self._post_text_selector)
                 text = await text_obj.text_content()
