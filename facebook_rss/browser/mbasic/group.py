@@ -11,7 +11,6 @@ class GroupPage(ProfilePage):
     def __init__(self, page: Page, group: str):
         super().__init__(page, group)
         self._url = f"https://mbasic.facebook.com/groups/{group}/"
-        self._post_content_selector = "//div[1]"
         self._author_selector = "//strong/a"
         self._attached_link_selector = "a.eg.ec"
         self._image_selector = "img.t"
