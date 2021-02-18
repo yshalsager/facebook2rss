@@ -15,17 +15,17 @@ class BasePage(ABC):
         raise NotImplementedError
 
     @property
-    def url(self):
+    def url(self) -> str:
         return self._url
 
     @url.setter
     def url(self, value):
         self._url = value
 
-    async def get_actual_url(self):
+    async def get_actual_url(self) -> str:
         return self.page.url
 
-    async def get_actual_title(self):
+    async def get_actual_title(self) -> str:
         return await self.page.title()
 
     async def open(self, url):

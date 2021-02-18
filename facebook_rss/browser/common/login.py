@@ -8,7 +8,6 @@ from facebook_rss.browser.common.base_page import BasePage
 class BaseLoginPage(BasePage, ABC):
 
     def __init__(self, page: Page):
-        self._url = ""
         self._checkout_url = "facebook.com/checkpoint/"
         super().__init__(page)
 

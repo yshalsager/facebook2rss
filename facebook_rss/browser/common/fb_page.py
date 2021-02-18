@@ -1,3 +1,4 @@
+# pylint: disable=R0801
 import re
 from abc import abstractmethod, ABC
 from typing import List
@@ -6,7 +7,6 @@ from playwright.async_api import Page, ElementHandle
 
 from facebook_rss.browser.common.base_page import BasePage
 from facebook_rss.models.post import Post
-# pylint: disable=R0801
 from facebook_rss.utils.html import strip_tags, clean_urls
 from facebook_rss.utils.misc import random_sleep
 
@@ -15,25 +15,71 @@ class BaseFBPage(BasePage, ABC):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        self._author_selector = None
-        self._attached_link_selector = None
-        self._comment_author_selector = 'h3'
-        self._comment_content_selector = 'div[1]'
-        self._comments_selector = '//div[contains(@id, "actions")]/following-sibling::div/div/div'
-        self._image_selector = None
-        self._post_selector = None
-        self._post_content_selector = None
-        self._post_text_selector = None
-        self._publish_date_selector = None
-        self._video_selector = None
-        self._url = ""
         self._is_group = False
-        self._not_available_selector = "//span[contains(text(), 'cannot be displayed right now') or" \
-                                       " contains(text(), 'was not found')]"
 
     @property
     @abstractmethod
     def posts_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _author_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _attached_link_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _image_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _post_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _post_content_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _post_text_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _publish_date_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _video_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _comment_author_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _comment_content_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _comments_selector(self):
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _not_available_selector(self):
         raise NotImplementedError
 
     @property

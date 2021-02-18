@@ -8,7 +8,6 @@ class LoginPage(BaseLoginPage):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        self._url = "https://mbasic.facebook.com/login/"
         self._not_now_btn = '//a[contains(@href, "regular_login")]'
 
     @classmethod
@@ -18,6 +17,10 @@ class LoginPage(BaseLoginPage):
         if current_url != self.url:
             await self.open(self.url)
         return self
+
+    @property
+    def url(self) -> str:
+        return "https://mbasic.facebook.com/login/"
 
     @property
     def email(self):

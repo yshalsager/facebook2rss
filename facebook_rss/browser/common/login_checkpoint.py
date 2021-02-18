@@ -12,7 +12,6 @@ class BaseLoginCheckpointPage(BasePage, ABC):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        self._url = ""
         self._code_form_selector = ""
         self._continue_selector = ""
 

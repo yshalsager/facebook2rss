@@ -8,7 +8,6 @@ class LoginPage(BaseLoginPage):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        self._url = "https://www.facebook.com/login/"
 
     @classmethod
     async def create(cls, page: Page):
@@ -17,6 +16,10 @@ class LoginPage(BaseLoginPage):
         if current_url != self.url:
             await self.open(self.url)
         return self
+
+    @property
+    def url(self) -> str:
+        return "https://www.facebook.com/login/"
 
     @property
     def email(self):

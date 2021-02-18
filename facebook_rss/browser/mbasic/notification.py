@@ -1,18 +1,16 @@
+# pylint: disable=R0801
 from typing import List
 
 from playwright.async_api import Page
 
-from facebook_rss.browser.common.fb_page import BaseFBPage
-# pylint: disable=R0801
+from facebook_rss.browser.common.base_page import BasePage
 from facebook_rss.models.notification import Notification
-from facebook_rss.models.post import Post
 
 
-class NotificationPage(BaseFBPage):
+class NotificationPage(BasePage):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        self._url = "https://mbasic.facebook.com/notifications.php"
         self._notifications_selector = '//a[contains(@href, "/notifications.php?") and not(@accesskey)]'
         self._notification_text_selector = 'div/span'
         self._notification_date_selector = '//span/abbr'
@@ -25,12 +23,9 @@ class NotificationPage(BaseFBPage):
             await self.open(self.url)
         return self
 
-    async def get_posts(self, full: int = 0, limit: int = 0, as_text: int = 0, include_comments: int = 0) -> List[Post]:
-        raise NotImplementedError
-
     @property
-    def posts_selector(self):
-        return ''
+    def url(self) -> str:
+        return "https://mbasic.facebook.com/notifications.php"
 
     async def get_notifications(self) -> List[Notification]:
         notifications_item = []
