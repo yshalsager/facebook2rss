@@ -62,4 +62,5 @@ RUN echo "Etc/UTC" > /etc/timezone
 
 EXPOSE 8080
 
+RUN chmod +x start.sh
 ENTRYPOINT ["./start.sh"]
