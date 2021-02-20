@@ -1,7 +1,6 @@
 .git/
 .tests/
 ./feeds.db
-./session
 Dockerfile
 
 ### Python ###
