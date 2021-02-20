@@ -36,6 +36,23 @@ Finally, install Playwright required files
 playwright install chromium
 ```
 
+## Docker
+**Build docker image**
+```bash
+docker build -t facebook2rss .
+```
+
+**Run container**
+```bash
+ docker run -p 8000:8000 -e EMAIL=email -e PASSWORD=password -d facebook2rss
+```
+`email` and `password` are facebook credentials.
+You can use any environmental variables defined in `config_example.env` as:
+
+```bash
+ docker run -p 8000:8000 -e EMAIL=email -e PASSWORD=password -e API_KEY="123" -e USE_KEY=True -d facebook2rss
+```
+
 ## Usage
 
 - First, If you want to access profiles and private groups feeds, login to Facebook using the following command that

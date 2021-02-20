@@ -1,0 +1,19 @@
+version: "3"
+services:
+  facebook2rss:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      EMAIL: "email"
+      PASSWORD: "password"
+      APP_NAME: "Facebook to RSS API Example"
+      USE_KEY: "False"
+      API_KEY: ""
+      PROXY_SERVER: ""
+      PROXY_USERNAME: ""
+      PROXY_PASSWORD: ""
+      LANGUAGE_CODE: "en"
+      SITE: "mbasic"
+      USE_ACCOUNT: "True"
+      EXPIRATION_TIME: 30
