@@ -18,13 +18,13 @@ The tool requires Python 3.7 with pip v19+ installed or poetry if you use it.
 
 Clone the repository and run any of the following commands:
 
-**Using poetry**
+### Using poetry
 
 ```bash
 poetry install
 ```
 
-**Using Pip**
+### Using Pip
 
 ```bash
 pip install .
@@ -37,21 +37,49 @@ playwright install chromium
 ```
 
 ## Docker
+
+You can use Docker to deploy the API quickly.
+
 **Build docker image**
+
 ```bash
 docker build -t facebook2rss .
 ```
 
-**Run container**
+**Run the container**
+
 ```bash
  docker run -p 8000:8000 -e EMAIL=email -e PASSWORD=password -d facebook2rss
 ```
-`email` and `password` are facebook credentials.
-You can use any environmental variables defined in `config_example.env` as:
+
+`email` and `password` are facebook credentials. You can use any environmental variables defined in `config_example.env`
+as:
 
 ```bash
  docker run -p 8000:8000 -e EMAIL=email -e PASSWORD=password -e API_KEY="123" -e USE_KEY=True -d facebook2rss
 ```
+
+### Docker compose
+
+- First, copy `config_example.env` and fill it with your desired configuration.
+- If you haven't logged in using your Facebook account yet, you may uncomment login step in `start.sh` file before
+  deployment.
+- Now, run the following command:
+
+```bash
+docker-compose up -d
+```
+
+- The API should be running now, checkout using the command `docker-compose logs -f`.
+
+**Notes**:
+
+- By default, the API runs on port 8000 using docker-compose. This can be changed by editing `start.sh`
+  and `docker-compose.yml`.
+- To stop the API, run the following command `docker-compose stop`.
+- To start it again: `docker-compose start`.
+- To delete the built docker image `docker-compose down`.
+- To update to the latest version, update the cloned git repo then run `docker-compose up -d`.
 
 ## Usage
 
