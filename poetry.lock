@@ -376,7 +376,7 @@ pytz = "*"
 
 [[package]]
 name = "uvicorn"
-version = "0.13.3"
+version = "0.13.4"
 description = "The lightning-fast ASGI server."
 category = "main"
 optional = false
@@ -390,12 +390,12 @@ httptools = {version = ">=0.1.0,<0.2.0", optional = true, markers = "sys_platfor
 python-dotenv = {version = ">=0.13", optional = true, markers = "extra == \"standard\""}
 PyYAML = {version = ">=5.1", optional = true, markers = "extra == \"standard\""}
 typing-extensions = {version = "*", markers = "python_version < \"3.8\""}
-uvloop = {version = ">=0.14.0", optional = true, markers = "sys_platform != \"win32\" and sys_platform != \"cygwin\" and platform_python_implementation != \"PyPy\" and extra == \"standard\""}
-watchgod = {version = ">=0.6,<0.7", optional = true, markers = "extra == \"standard\""}
+uvloop = {version = ">=0.14.0,<0.15.0 || >0.15.0,<0.15.1 || >0.15.1", optional = true, markers = "sys_platform != \"win32\" and sys_platform != \"cygwin\" and platform_python_implementation != \"PyPy\" and extra == \"standard\""}
+watchgod = {version = ">=0.6", optional = true, markers = "extra == \"standard\""}
 websockets = {version = ">=8.0.0,<9.0.0", optional = true, markers = "extra == \"standard\""}
 
 [package.extras]
-standard = ["websockets (>=8.0.0,<9.0.0)", "watchgod (>=0.6,<0.7)", "python-dotenv (>=0.13)", "PyYAML (>=5.1)", "httptools (>=0.1.0,<0.2.0)", "uvloop (>=0.14.0)", "colorama (>=0.4)"]
+standard = ["websockets (>=8.0.0,<9.0.0)", "watchgod (>=0.6)", "python-dotenv (>=0.13)", "PyYAML (>=5.1)", "httptools (>=0.1.0,<0.2.0)", "uvloop (>=0.14.0,!=0.15.0,!=0.15.1)", "colorama (>=0.4)"]
 
 [[package]]
 name = "uvloop"
@@ -436,7 +436,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "8b403072097aac837bc8152e8ca3be2db39f35a9d4197d1ba1c1cb769eaf6f76"
+content-hash = "a08a514197df56b124a5862bac0460629ee53ff9d01e93902f370be1417cadd6"
 
 [metadata.files]
 atomicwrites = [
@@ -775,8 +775,8 @@ tzlocal = [
     {file = "tzlocal-2.1.tar.gz", hash = "sha256:643c97c5294aedc737780a49d9df30889321cbe1204eac2c2ec6134035a92e44"},
 ]
 uvicorn = [
-    {file = "uvicorn-0.13.3-py3-none-any.whl", hash = "sha256:1079c50a06f6338095b4f203e7861dbff318dde5f22f3a324fc6e94c7654164c"},
-    {file = "uvicorn-0.13.3.tar.gz", hash = "sha256:ef1e0bb5f7941c6fe324e06443ddac0331e1632a776175f87891c7bd02694355"},
+    {file = "uvicorn-0.13.4-py3-none-any.whl", hash = "sha256:7587f7b08bd1efd2b9bad809a3d333e972f1d11af8a5e52a9371ee3a5de71524"},
+    {file = "uvicorn-0.13.4.tar.gz", hash = "sha256:3292251b3c7978e8e4a7868f4baf7f7f7bb7e40c759ecc125c37e99cdea34202"},
 ]
 uvloop = [
     {file = "uvloop-0.14.0-cp35-cp35m-macosx_10_11_x86_64.whl", hash = "sha256:08b109f0213af392150e2fe6f81d33261bb5ce968a288eb698aad4f46eb711bd"},
