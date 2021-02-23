@@ -20,16 +20,16 @@ class NotificationPage(BaseNotificationPage):
 
     @property
     def url(self) -> str:
-        return "https://mbasic.facebook.com/notifications.php"
+        return "https://www.facebook.com/notifications"
 
     @property
     def _notifications_selector(self):
-        return '//a[contains(@href, "/notifications.php?") and not(@accesskey)]'
+        return '//a[contains(@href, "ref=notif")]'
 
     @property
     def _notification_text_selector(self):
-        return 'div/span'
+        return '//div/span/span[(strong)]'
 
     @property
     def _notification_date_selector(self):
-        return '//span/abbr'
+        return '//div/span/span[not(strong)]'
