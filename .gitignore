@@ -148,3 +148,4 @@ dmypy.json
 *.db
 *.env
 *.log.*
+browser_data/
