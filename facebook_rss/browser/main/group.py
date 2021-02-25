@@ -29,8 +29,8 @@ class GroupPage(ProfilePage):
 
     @property
     def _post_content_selector(self):
-        return '//div[@role="article"]//div[contains(text(), " ")]'
+        return '//div[contains(text(), " ")]'
 
     @property
     def _post_text_selector(self):
-        return self._post_content_selector
+        return f'//div[@role="article"]{self._post_content_selector}'

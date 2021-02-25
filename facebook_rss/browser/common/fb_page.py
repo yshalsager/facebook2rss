@@ -150,6 +150,7 @@ class BaseFBPage(BasePage, ABC):
                 full_text = f"{profile_name} posted:\n"
             if not as_text:
                 post_html = ""
+                await self.page.wait_for_selector(self._post_content_selector)
                 html_parts = await self.page.query_selector_all(
                     f"{self._post_selector}{self._post_content_selector}") \
                     if not posts_urls else await self.page.query_selector(
