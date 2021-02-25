@@ -24,8 +24,9 @@ async def get_group(fb_page: str, commons: dict = Depends(common_parameters),
     """
     Get feeds of the given group id.
     """
+    site = commons["site"] or settings.SITE
     page: Page = await browser.new_page()
-    group_page = await pages[settings.SITE]["group"].create(page, fb_page)
+    group_page = await pages[site]["group"].create(page, fb_page)
     is_private = await group_page.is_private
     if not settings.USE_ACCOUNT and is_private:
         await page.close()

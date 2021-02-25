@@ -25,8 +25,9 @@ async def get_notifications(fb_page: str = "notifications", browser=Depends(get_
     """
     Get feeds of your account notifications.
     """
+    site = commons["site"] or settings.SITE
     page: Page = await browser.new_page()
-    notifications_page = await pages[settings.SITE]["notification"].create(page)
+    notifications_page = await pages[site]["notification"].create(page)
     notifications: List[Notification] = await notifications_page.get_notifications()
     rss_feed = NotificationRSSGenerator(notifications).generate_feed()
     await browser.get_cookies()

@@ -24,8 +24,9 @@ async def get_page(fb_page: str, commons: dict = Depends(common_parameters),
     """
     Get feeds of the given page username or id.
     """
+    site = commons["site"] or settings.SITE
     page: Page = await browser.new_page()
-    _page = await pages[settings.SITE]["page"].create(page, fb_page)
+    _page = await pages[site]["page"].create(page, fb_page)
     if await _page.is_not_available:
         await page.close()
         raise unavailable
