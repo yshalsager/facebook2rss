@@ -24,7 +24,7 @@ async def login_and_get_cookies(user: str, password: str, site="mbasic"):
         await login_checkpoint_page.login()
     if callable(getattr(login_page, 'skip_save', None)):
         await login_page.skip_save()
-    cookies = await browser.cookies
+    cookies = await browser.get_cookies()
     await page.close()
     await browser.shutdown()
     if cookies:

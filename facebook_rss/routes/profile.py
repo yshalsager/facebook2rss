@@ -34,5 +34,6 @@ async def get_profile(fb_page: str, commons: dict = Depends(common_parameters),
         full=commons["full"], limit=commons["limit"], as_text=commons["as_text"],
         include_comments=commons["comments"])
     rss_feed = RSSGenerator(posts, fb_page).generate_feed()
+    await browser.get_cookies()
     await page.close()
     return Response(content=rss_feed, media_type="application/xml")

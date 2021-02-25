@@ -32,5 +32,6 @@ async def get_page(fb_page: str, commons: dict = Depends(common_parameters),
     posts: List[Post] = await _page.get_posts(
         full=commons["full"], limit=commons["limit"], as_text=commons["as_text"], include_comments=commons["comments"])
     rss_feed = RSSGenerator(posts, fb_page).generate_feed()
+    await browser.get_cookies()
     await page.close()
     return Response(content=rss_feed, media_type="application/xml")

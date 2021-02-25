@@ -16,6 +16,7 @@ class Browser:
         self._playwright: Optional[Playwright] = None
         self._browser: Optional[BrowserContext] = None
         self._settings: Settings = settings
+        self.cookies = []
 
     async def start(self, *args, **kwargs):
         if not self._playwright:
@@ -47,9 +48,9 @@ class Browser:
         await self._browser.close()
         await self._playwright.stop()
 
-    @property
-    async def cookies(self):
-        return await self._browser.cookies()
+    async def get_cookies(self):
+        self.cookies = await self._browser.cookies()
+        return self.cookies
 
 
 # Dependency
@@ -61,9 +62,8 @@ async def get_browser() -> Browser:
     try:
         yield browser
     finally:
-        cookies = await browser.cookies
-        if len(cookies) > 2:
-            pickle_(cookies)
+        if len(browser.cookies) > 2:
+            pickle_(browser.cookies)
             logger.info("Saved updated Browser cookies locally.")
         await browser.shutdown()
         logger.info("Browser shutdown.")

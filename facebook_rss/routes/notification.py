@@ -29,5 +29,6 @@ async def get_notifications(fb_page: str = "notifications", browser=Depends(get_
     notifications_page = await pages[settings.SITE]["notification"].create(page)
     notifications: List[Notification] = await notifications_page.get_notifications()
     rss_feed = NotificationRSSGenerator(notifications).generate_feed()
+    await browser.get_cookies()
     await page.close()
     return Response(content=rss_feed, media_type="application/xml")
