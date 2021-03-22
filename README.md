@@ -3,6 +3,10 @@
 A small API for accessing Facebook profile, pages, groups posts and notifications as RSS feeds. Based
 on [FastAPI](https://github.com/tiangolo/fastapi) and [Playwright](https://github.com/microsoft/playwright-python).
 
+## Important
+
+The tool is no longer under-development. Facebook doesn't like it, check more info here https://github.com/yshalsager/facebook2rss/issues/21
+
 ## Disclaimer
 
 1- This tool is provided with no warranty of any kind. I am not responsible for anything that might happen to your
